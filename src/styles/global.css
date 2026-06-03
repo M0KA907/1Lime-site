@@ -105,6 +105,9 @@ a { color: var(--lime-600); }
 .cy-panel .eyebrow, .cy-panel .kicker { color: var(--lime); }
 .cy-panel .muted { color: var(--cy-dim); }
 .cy-panel a { color: var(--lime); }
+/* buttons keep their own text color inside dark panels (else lime-on-lime = invisible) */
+.cy-panel a.btn--primary { color: var(--lime-ink); }
+.cy-panel a.btn--cyber { color: #c5f55a; }
 
 /* mono terminal-style kicker: "$ services" */
 .kicker {
