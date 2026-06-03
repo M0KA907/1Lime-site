@@ -3,9 +3,10 @@
   /* color */
   --ink: #0f1410;
   --ink-2: #1b231c;
-  --paper: #fbfdfa;
-  --muted: #5a6b5d;
-  --line: #e2e8e1;
+  --paper: #eef1e8;      /* soft off-white — page bg + text-on-dark (was harsh #fbfdfa) */
+  --surface: #f6f8f1;    /* slightly lighter raised surface for cards */
+  --muted: #54655a;      /* nudged darker to hold AA on the softer paper */
+  --line: #dde4da;
   --lime: #84cc16;       /* accent */
   --lime-600: #5d930f;   /* AA text-on-paper */
   --lime-ink: #1a2e05;   /* text on lime */

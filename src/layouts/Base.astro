@@ -32,7 +32,7 @@ const gh = site.github[0];
     <header class="site-header">
       <div class="container site-header__inner">
         <a class="brand" href={base} aria-label="1Lime home">
-          <span class="brand__dot" aria-hidden="true"></span> 1Lime
+          <img class="brand__logo" src={`${base}/logo.png`} alt="" width="34" height="36" decoding="async" /> 1Lime
         </a>
         <nav aria-label="Primary">
           <ul>
@@ -65,7 +65,7 @@ const gh = site.github[0];
       .site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
       .site-header__inner { display: flex; align-items: center; gap: var(--s-3); padding-block: 0.9rem; }
       .brand { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.2rem; color: var(--ink); text-decoration: none; }
-      .brand__dot { width: 0.85rem; height: 0.85rem; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 4px color-mix(in srgb, var(--lime) 25%, transparent); }
+      .brand__logo { width: 2.125rem; height: auto; display: block; filter: drop-shadow(0 0 6px color-mix(in srgb, var(--lime) 35%, transparent)); }
       nav[aria-label="Primary"] ul { display: none; list-style: none; gap: var(--s-3); margin: 0; padding: 0; }
       nav[aria-label="Primary"] a { color: var(--ink); text-decoration: none; font-weight: 600; }
       nav[aria-label="Primary"] a:hover { color: var(--lime-600); }
