@@ -1,63 +1,69 @@
 ---
 import Base from '../layouts/Base.astro';
-import Step from '../components/Step.astro';
+import Terminal from '../components/Terminal.astro';
 import Cta from '../components/Cta.astro';
 
 const title = '1Lime — About';
-const description = 'The factory is the product. 1Lime is a multi-agent system that turns business requirements into fast, accessible websites — getting sharper with every project.';
+const description = 'The factory is the product. 1Lime is a multi-agent system turning business requirements into fast, accessible websites — sharper every project.';
 
-const principles = [
-  { n: 1, title: 'Build systems, not projects', body: 'Every site is built from reusable parts, so the next one starts further ahead than the last.' },
-  { n: 2, title: 'Standards are not optional', body: 'Accessibility and performance are gates, not nice-to-haves. No build skips them to hit a date.' },
-  { n: 3, title: 'No fabricated proof', body: "We show a number only once it's measured on the real site. Until then we say what we're aiming for." },
-  { n: 4, title: 'You own the result', body: 'Plain, portable code on an open host. No lock-in, no rented platform, nothing to lose access to.' },
+// Show, don't tell: principles rendered as a config file.
+const rules = [
+  { k: 'build', v: '"systems, not projects"', c: 'reusable parts → next build starts ahead' },
+  { k: 'gates', v: 'required = true', c: 'a11y + perf are gates, not nice-to-haves' },
+  { k: 'proof', v: 'fabricated = false', c: 'a number ships only once measured on the real site' },
+  { k: 'owner', v: '"you"', c: 'plain portable code, open host, no lock-in' },
 ];
 ---
 <Base title={title} description={description}>
   <!-- INTRO -->
-  <section class="section hero" aria-labelledby="about-h">
+  <section class="section" aria-labelledby="about-h">
     <div class="container">
-      <p class="eyebrow">About</p>
-      <h1 id="about-h">The factory is the product</h1>
-      <p class="lede">1Lime isn't a freelancer with a backlog. It's a system: a pipeline that turns what
-        your business needs into a production website, and gets sharper every time it runs.</p>
+      <div class="cy-panel hero">
+        <p class="kicker">whoami</p>
+        <h1 id="about-h" class="glow">The factory is the product</h1>
+        <p class="lede">1Lime isn't a freelancer with a backlog. It's a system: a pipeline that turns what
+          your business needs into a production website — and gets sharper every time it runs.</p>
+      </div>
     </div>
   </section>
 
-  <!-- WHY -->
+  <!-- WHY (kept short) -->
   <section class="section" aria-labelledby="why-h">
     <div class="container prose">
-      <p class="eyebrow">Why we work this way</p>
+      <p class="kicker">why</p>
       <h2 id="why-h">Most small-business sites fail slowly</h2>
-      <p>They launch, then rot — slow to load, hard to use on a phone, impossible to edit, and quietly
-        inaccessible to a chunk of every audience. The usual fix is a bigger budget or a heavier platform.
-        We think the real problem is that each site is rebuilt from scratch, by hand, with the same mistakes.</p>
-      <p>So we built a factory instead. Discovery, architecture, build, verification, and deploy are
-        distinct stages with their own checks. Every project leaves behind reusable components, patterns,
-        and knowledge — which is why the work gets faster and more reliable, not slower, as it scales.</p>
+      <p>They launch, then rot — slow to load, awkward on a phone, impossible to edit, quietly inaccessible
+        to part of every audience. The usual fix is a bigger budget. The real problem is that each site is
+        rebuilt by hand, with the same mistakes.</p>
+      <p>So we built a factory. Discovery, architecture, build, verification, deploy — distinct stages with
+        their own checks. Every project leaves reusable components and knowledge behind, which is why the
+        work gets faster and more reliable as it scales, not slower.</p>
     </div>
   </section>
 
-  <!-- PRINCIPLES -->
-  <section class="section process" aria-labelledby="principles-h">
+  <!-- PRINCIPLES (show: config file) -->
+  <section class="section" aria-labelledby="principles-h">
     <div class="container">
-      <p class="eyebrow">What we hold to</p>
-      <h2 id="principles-h">Four rules we don't bend</h2>
-      <ol class="steps">
-        {principles.map((p) => <Step n={p.n} title={p.title} body={p.body} />)}
-      </ol>
+      <p class="kicker">cat principles.toml</p>
+      <h2 id="principles-h">Rules we don't bend</h2>
+      <Terminal title="principles.toml" label="Principles 1Lime holds to">
+        <ul class="term__body">
+          {rules.map((r) => (
+            <li class="termline">
+              <span><strong>{r.k}</strong> <span aria-hidden="true">= </span><span class="val">{r.v}</span>  <span class="muted"># {r.c}</span></span>
+            </li>
+          ))}
+        </ul>
+      </Terminal>
     </div>
   </section>
 
-  <Cta id="contact" headline="Put the factory to work" body="Bring a goal and some content. We'll turn it into a fast, accessible site — and tell you exactly what that takes." />
+  <Cta id="contact" headline="put the factory to work" body="Bring a goal and some content. We turn it into a fast, accessible site — and tell you exactly what that takes." />
 
   <style>
-    .lede { font-size: var(--step-1); color: var(--ink-2); max-width: 54ch; }
-    .prose { max-width: 60ch; }
-    .process { background: var(--ink); color: var(--paper); border-radius: var(--radius); }
-    .process .eyebrow { color: var(--lime); }
-    .process .steps { list-style: none; margin: 0; padding: 0; max-width: 52rem; }
-    .process .step { border-bottom-color: color-mix(in srgb, var(--paper) 18%, transparent); }
-    .process .muted { color: color-mix(in srgb, var(--paper) 70%, transparent); }
+    .hero { padding: var(--s-4); }
+    .lede { font-size: var(--step-1); color: var(--cy-dim); max-width: 54ch; }
+    .prose { max-width: 64ch; }
+    .val { color: var(--lime); font-family: var(--font-mono); }
   </style>
 </Base>

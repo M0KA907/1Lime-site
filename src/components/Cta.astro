@@ -1,29 +1,33 @@
 ---
-// P6/P7 — reusable lime CTA band. Mailto fallback = zero JS, never dead-ends.
+// P6/P7 — reusable cyber CTA panel. Discord = primary channel, GitHub = proof. No email.
+import { site } from '../data/site';
+import Icon from './Icon.astro';
 const {
   id,
-  headline = "Tell us what you need shipped",
-  body = "One call. We scope it, quote it, and tell you exactly what you'll get and when.",
+  headline = 'open a channel',
+  body = 'No forms, no inbox. Message us on Discord and tell us what to ship — or read the code first.',
   labelledby = id ? `${id}-h` : undefined,
 } = Astro.props;
-const mailtoPrimary = "mailto:hello@1lime.dev?subject=Book%20a%20call&body=What%20do%20you%20want%20to%20build%3F";
-const mailtoSecondary = "mailto:hello@1lime.dev?subject=Website%20enquiry";
+const gh = site.github[0];
 ---
-<section id={id} class="section cta-band" aria-labelledby={labelledby}>
+<section id={id} class="section" aria-labelledby={labelledby}>
   <div class="container">
-    <h2 id={labelledby}>{headline}</h2>
-    <p>{body}</p>
-    <p class="cta-row">
-      <a class="btn btn--primary" href={mailtoPrimary}>Book a call</a>
-      <a class="btn btn--ghost" href={mailtoSecondary}>Email hello@1lime.dev</a>
-    </p>
-    <p class="muted note">Prefer email? It works without JavaScript — your client opens with the details pre-filled.</p>
+    <div class="cy-panel cta">
+      <p class="kicker">connect --discord</p>
+      <h2 id={labelledby} class="glow">{headline}</h2>
+      <p>{body}</p>
+      <p class="cta-row">
+        <a class="btn btn--primary" href={site.discord.invite} rel="noopener"><Icon name="discord" />Message on Discord</a>
+        <a class="btn btn--cyber" href={gh.url} rel="noopener"><Icon name="github" />{gh.handle}</a>
+      </p>
+      <p class="muted note"><span aria-hidden="true">// </span>both links work with JavaScript disabled — plain anchors, no tracker, no backend.</p>
+    </div>
   </div>
 </section>
 <style>
-  .cta-band { background: var(--lime); color: var(--lime-ink); border-radius: var(--radius); }
-  .cta-band p { color: var(--lime-ink); }
+  .cta { padding: var(--s-4); }
   .cta-row { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-3); }
-  .cta-band .btn--ghost { border-color: var(--lime-ink); color: var(--lime-ink); }
-  .note { font-size: var(--step--1); }
+  .note { font-size: var(--step--1); margin-top: var(--s-2); margin-bottom: 0; }
+  .btn--cyber { font-family: var(--font-mono); border-color: var(--lime); color: var(--lime); background: transparent; }
+  .btn--cyber:hover { background: color-mix(in srgb, var(--lime) 14%, transparent); }
 </style>

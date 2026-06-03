@@ -1,12 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import ServiceCard from '../components/ServiceCard.astro';
 import Step from '../components/Step.astro';
+import Terminal from '../components/Terminal.astro';
+import Cta from '../components/Cta.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
 
-const services = [
-  { title: 'Local business sites', body: 'Restaurants, trades, clinics, services. Fast, findable, mobile-first — live in days.' },
-  { title: 'Landing pages', body: 'Single-purpose pages built to convert one visitor action. Measured, not guessed.' },
-  { title: 'Portfolios & brochure sites', body: 'Credible, accessible, low-maintenance sites that age well and load instantly.' },
+const modules = [
+  { badge: '[ READY ]', title: 'Local business sites', body: 'Restaurants, trades, clinics, services. Fast, findable, mobile-first — live in days.' },
+  { badge: '[ READY ]', title: 'Landing pages', body: 'Single-purpose pages built to convert one visitor action. Measured, not guessed.' },
+  { badge: '[ READY ]', title: 'Portfolios & brochure sites', body: 'Credible, accessible sites that age well and load instantly.' },
 ];
 
 const steps = [
@@ -15,88 +18,100 @@ const steps = [
   { n: 3, title: 'Build & verify', body: 'Astro build, then automated accessibility, performance, and SEO gates. No gate skipped.' },
   { n: 4, title: 'Deploy & improve', body: 'Shipped to a CDN-backed host, then monitored and improved with real data.' },
 ];
+
+// Honesty rule (content-model.md §ProofPoint): qualitative only until E measures THIS site.
+const checks = [
+  { ok: true, key: 'a11y     ', val: 'WCAG 2.1 AA — target on every page' },
+  { ok: true, key: 'perf     ', val: 'static · CDN · no JS runtime shipped' },
+  { ok: true, key: 'resilient', val: 'renders with JavaScript disabled' },
+  { ok: false, key: 'metrics  ', val: 'awaiting first measured deploy — no invented numbers' },
+];
+
+const home = import.meta.env.BASE_URL;
+const processHref = (home.endsWith('/') ? home : `${home}/`) + '#process';
 ---
 <Base>
   <!-- HERO -->
-  <section class="section hero">
+  <section class="section" aria-labelledby="hero-h">
     <div class="container">
-      <p class="eyebrow">Website production, systematised</p>
-      <h1>Websites, delivered like a&nbsp;factory.</h1>
-      <p class="lede">1Lime turns your requirements into a fast, accessible, production-ready website —
-        built by a multi-agent system that gets sharper with every project. Less back-and-forth, more shipped.</p>
-      <p class="cta-row">
-        <a class="btn btn--primary" href="#contact">Book a call</a>
-        <a class="btn btn--ghost" href="#process">See how it works</a>
-      </p>
+      <div class="cy-panel hero">
+        <p class="kicker">1lime --init</p>
+        <h1 id="hero-h" class="glow">Websites, delivered like a&nbsp;factory.</h1>
+        <p class="lede">1Lime turns your requirements into a fast, accessible, production-ready website —
+          built by a multi-agent system that gets sharper with every project. Less back-and-forth, more shipped.</p>
+        <p class="cta-row">
+          <a class="btn btn--primary" href={site.discord.invite} rel="noopener"><Icon name="discord" />Message on Discord</a>
+          <a class="btn btn--cyber" href={processHref}>See how it works</a>
+        </p>
+      </div>
     </div>
   </section>
 
   <!-- SERVICES -->
   <section id="services" class="section" aria-labelledby="services-h">
     <div class="container">
-      <p class="eyebrow">What we build</p>
+      <p class="kicker">services --list</p>
       <h2 id="services-h">Production sites, not experiments</h2>
-      <div class="grid grid--3" role="list">
-        {services.map((s) => <div role="listitem"><ServiceCard title={s.title} body={s.body} /></div>)}
-      </div>
+      <ul class="grid grid--3 reset" role="list">
+        {modules.map((m) => (
+          <li>
+            <article class="module">
+              <span class="badge" aria-hidden="true">{m.badge}</span>
+              <h3>{m.title}</h3>
+              <p class="muted">{m.body}</p>
+            </article>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 
   <!-- PROCESS -->
-  <section id="process" class="section process" aria-labelledby="process-h">
+  <section id="process" class="section" aria-labelledby="process-h">
     <div class="container">
-      <p class="eyebrow">How it works</p>
-      <h2 id="process-h">A pipeline, every time</h2>
-      <ol class="steps">
-        {steps.map((s) => <Step n={s.n} title={s.title} body={s.body} />)}
-      </ol>
+      <div class="cy-panel process">
+        <p class="kicker">pipeline --stages</p>
+        <h2 id="process-h">A pipeline, every time</h2>
+        <ol class="steps">
+          {steps.map((s) => <Step n={s.n} title={s.title} body={s.body} />)}
+        </ol>
+      </div>
     </div>
   </section>
 
   <!-- WORK / PROOF -->
   <section id="work" class="section" aria-labelledby="work-h">
     <div class="container">
-      <p class="eyebrow">Proof</p>
+      <p class="kicker">verify ./site</p>
       <h2 id="work-h">Built to standards you can measure</h2>
-      <ul class="proof">
-        <li><strong>WCAG 2.1 AA</strong><span class="muted">accessibility, every page</span></li>
-        <li><strong>90+ Lighthouse</strong><span class="muted">performance, a11y, SEO</span></li>
-        <li><strong>Days, not months</strong><span class="muted">discovery to deploy</span></li>
-      </ul>
-      <p class="muted">Case studies land here as projects ship — each one feeds the factory.</p>
+      <Terminal title="1lime verify ./site" label="Standards every 1Lime site is built to clear">
+        <ul class="term__body">
+          {checks.map((c) => (
+            <li class="termline">
+              <span class={`tag ${c.ok ? 'tag--ok' : 'tag--wait'}`} aria-hidden="true">{c.ok ? '[✓]' : '[ ]'}</span>
+              <span><strong>{c.key}</strong> {c.val}</span>
+            </li>
+          ))}
+        </ul>
+      </Terminal>
+      <p class="muted note"><span aria-hidden="true">// </span>Case studies land here as projects ship — each one feeds the factory.</p>
     </div>
   </section>
 
   <!-- CONTACT / CTA -->
-  <section id="contact" class="section cta-band" aria-labelledby="contact-h">
-    <div class="container">
-      <h2 id="contact-h">Tell us what you need shipped</h2>
-      <p>One call. We scope it, quote it, and tell you exactly what you'll get and when.</p>
-      <p class="cta-row">
-        <a class="btn btn--primary" href="mailto:hello@1lime.dev?subject=Website%20enquiry&body=What%20do%20you%20want%20to%20build%3F">Email hello@1lime.dev</a>
-        <a class="btn btn--ghost" href="mailto:hello@1lime.dev?subject=Book%20a%20call">Book a call</a>
-      </p>
-      <p class="muted note">Prefer a form? It works without JavaScript — your email client opens with the details pre-filled.</p>
-    </div>
-  </section>
+  <Cta id="contact" headline="tell us what to ship" body="One message. We scope it, quote it, and tell you exactly what you get and when. No forms, no inbox." />
 
   <style>
+    .hero, .process { padding: var(--s-4); }
     .hero { padding-top: var(--s-5); }
-    .lede { font-size: var(--step-1); color: var(--ink-2); max-width: 42ch; }
+    .lede { font-size: var(--step-1); color: var(--cy-dim); max-width: 46ch; }
     .cta-row { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-3); }
-    .process { background: var(--ink); color: var(--paper); border-radius: var(--radius); }
-    .process .eyebrow { color: var(--lime); }
-    .process .steps { list-style: none; margin: 0; padding: 0; }
-    .process .step { border-bottom-color: color-mix(in srgb, var(--paper) 18%, transparent); }
-    .process .muted { color: color-mix(in srgb, var(--paper) 70%, transparent); }
-    .steps { max-width: 52rem; }
-    .proof { list-style: none; padding: 0; display: grid; gap: var(--s-2); margin: 0 0 var(--s-3); }
-    .proof li { display: flex; flex-direction: column; }
-    .proof strong { font-size: var(--step-2); }
-    @media (min-width: 48rem) { .proof { grid-template-columns: repeat(3, 1fr); } }
-    .cta-band { background: var(--lime); color: var(--lime-ink); border-radius: var(--radius); }
-    .cta-band .btn--ghost { border-color: var(--lime-ink); color: var(--lime-ink); }
-    .cta-band p { color: var(--lime-ink); }
-    .note { font-size: var(--step--1); }
+    .btn--cyber { font-family: var(--font-mono); border-color: var(--lime); color: var(--lime); background: transparent; }
+    .btn--cyber:hover { background: color-mix(in srgb, var(--lime) 14%, transparent); }
+    .reset { list-style: none; padding: 0; margin: 0; }
+    .process .steps { list-style: none; margin: 0; padding: 0; max-width: 52rem; }
+    .process .step { border-bottom-color: var(--cy-edge); }
+    .process .muted { color: var(--cy-dim); }
+    .note { font-size: var(--step--1); margin-top: var(--s-3); }
   </style>
 </Base>

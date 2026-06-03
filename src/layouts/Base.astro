@@ -1,13 +1,18 @@
 ---
 import '../styles/global.css';
+import { site } from '../data/site';
+import Icon from '../components/Icon.astro';
 const { title = '1Lime — websites, delivered like a factory', description = '1Lime turns business requirements into fast, accessible, production-ready websites — built by a multi-agent factory, not a one-off freelancer.' } = Astro.props;
 const base = import.meta.env.BASE_URL;
+// Root-prefixed anchors so nav works identically on the home page and every subpage.
+const home = base.endsWith('/') ? base : `${base}/`;
 const nav = [
-  { href: '#services', label: 'Services' },
-  { href: '#process', label: 'Process' },
-  { href: '#work', label: 'Work' },
-  { href: '#contact', label: 'Contact' },
+  { href: `${home}#services`, label: 'Services' },
+  { href: `${home}#process`, label: 'Process' },
+  { href: `${home}#work`, label: 'Work' },
+  { href: `${home}#contact`, label: 'Contact' },
 ];
+const gh = site.github[0];
 ---
 <!doctype html>
 <html lang="en">
@@ -34,7 +39,7 @@ const nav = [
             {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
           </ul>
         </nav>
-        <a class="btn btn--primary" href="#contact">Book a call</a>
+        <a class="btn btn--primary" href={site.discord.invite} rel="noopener"><Icon name="discord" />Message on Discord</a>
       </div>
     </header>
 
@@ -43,8 +48,16 @@ const nav = [
     </main>
 
     <footer class="site-footer">
-      <div class="container">
+      <div class="container site-footer__inner">
         <p class="muted">© 2026 1Lime — the factory is the product. Built with Astro · deployed on GitHub Pages.</p>
+        <ul class="socials" aria-label="1Lime social links">
+          <li>
+            <a href={site.discord.invite} rel="noopener"><Icon name="discord" /><span>Discord</span></a>
+          </li>
+          <li>
+            <a href={gh.url} rel="noopener"><Icon name="github" /><span>{gh.handle}</span></a>
+          </li>
+        </ul>
       </div>
     </footer>
 
@@ -63,6 +76,11 @@ const nav = [
         nav[aria-label="Primary"] { margin-left: auto; }
       }
       .site-footer { border-top: 1px solid var(--line); padding-block: var(--s-4); margin-top: var(--s-5); }
+      .site-footer__inner { display: flex; flex-wrap: wrap; gap: var(--s-3); align-items: center; justify-content: space-between; }
+      .socials { display: flex; gap: var(--s-3); list-style: none; margin: 0; padding: 0; }
+      .socials a { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--ink); text-decoration: none; font-weight: 600; }
+      .socials a:hover { color: var(--lime-600); }
+      .socials .icon { font-size: 1.25em; }
     </style>
   </body>
 </html>

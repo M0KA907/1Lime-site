@@ -1,0 +1,12 @@
+---
+// Faux terminal window — chrome only. Real semantic markup goes in the slot.
+// Decorative dots + titlebar are aria-hidden; content stays accessible.
+const { title = 'sh', label } = Astro.props;
+---
+<div class="term" role="group" aria-label={label ?? title}>
+  <div class="term__bar" aria-hidden="true">
+    <span class="term__dot"></span><span class="term__dot"></span><span class="term__dot"></span>
+    <span class="term__title">{title}</span>
+  </div>
+  <slot />
+</div>

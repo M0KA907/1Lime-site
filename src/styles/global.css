@@ -72,3 +72,90 @@ a { color: var(--lime-600); }
 
 .grid { display: grid; gap: var(--s-3); }
 @media (min-width: 48rem) { .grid--3 { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 48rem) { .grid--2 { grid-template-columns: repeat(2, 1fr); } }
+
+/* ─────────────────────────────────────────────────────────────
+   Cybercore utilities — additive, used only by D's sub-pages.
+   index.astro / Base.astro do not reference these → unaffected.
+   ───────────────────────────────────────────────────────────── */
+:root {
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --grid-line: color-mix(in srgb, var(--lime) 13%, transparent);
+  --cy-edge: color-mix(in srgb, var(--lime) 38%, transparent);
+  --cy-dim: color-mix(in srgb, var(--paper) 64%, transparent);
+}
+
+.mono { font-family: var(--font-mono); }
+
+/* dark panel + faint engineering grid backdrop */
+.cy-panel {
+  position: relative;
+  background:
+    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 100% 2.4rem,
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 2.4rem 100%,
+    var(--ink);
+  color: var(--paper);
+  border: 1px solid var(--cy-edge);
+  border-radius: var(--radius);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--lime) 6%, transparent),
+              0 0 2.5rem color-mix(in srgb, var(--lime) 7%, transparent);
+  overflow: hidden;
+}
+.cy-panel .eyebrow, .cy-panel .kicker { color: var(--lime); }
+.cy-panel .muted { color: var(--cy-dim); }
+.cy-panel a { color: var(--lime); }
+
+/* mono terminal-style kicker: "$ services" */
+.kicker {
+  font-family: var(--font-mono);
+  text-transform: lowercase; letter-spacing: 0.04em;
+  font-size: var(--step--1); font-weight: 700; color: var(--lime-600);
+  margin: 0 0 var(--s-1);
+}
+.kicker::before { content: "$ "; opacity: 0.7; }
+
+/* neon glow on a heading (static — no animation, AA preserved) */
+.glow { text-shadow: 0 0 0.5em color-mix(in srgb, var(--lime) 45%, transparent); }
+
+/* faux terminal window built from real semantic markup */
+.term { font-family: var(--font-mono); border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--cy-edge); background: #0a0e0b; }
+.term__bar { display: flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 0.9rem; background: color-mix(in srgb, var(--lime) 8%, #0a0e0b);
+  border-bottom: 1px solid var(--cy-edge); }
+.term__dot { width: 0.7rem; height: 0.7rem; border-radius: 50%; background: var(--cy-edge); }
+.term__title { margin-left: 0.4rem; font-size: var(--step--1); color: var(--cy-dim); }
+.term__body { padding: var(--s-3); margin: 0; list-style: none;
+  font-size: var(--step--1); line-height: 1.9; color: var(--paper); }
+.termline { display: flex; gap: 0.75rem; align-items: baseline; }
+.termline > .tag { flex: none; }
+.tag--ok { color: var(--lime); }
+.tag--wait { color: color-mix(in srgb, var(--paper) 55%, transparent); }
+.term__body strong { color: var(--paper); font-weight: 700; }
+.term__body .muted { color: var(--cy-dim); }
+
+/* HUD metric tiles */
+.hud { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-2); }
+@media (min-width: 40rem) { .hud { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 56rem) { .hud { grid-template-columns: repeat(4, 1fr); } }
+.hud__tile { border: 1px solid var(--cy-edge); border-radius: 10px; padding: var(--s-2);
+  background: color-mix(in srgb, var(--lime) 5%, transparent); display: flex; flex-direction: column; gap: 0.25rem; }
+.hud__tile b { font-family: var(--font-mono); font-size: var(--step-1); color: var(--lime); }
+.hud__tile span { font-size: var(--step--1); color: var(--cy-dim); }
+
+/* module/spec card on dark */
+.module { border: 1px solid var(--cy-edge); border-radius: 10px; padding: var(--s-3);
+  background: color-mix(in srgb, var(--lime) 4%, transparent); height: 100%;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease; }
+.module:hover, .module:focus-within {
+  border-color: var(--lime); box-shadow: 0 0 1.5rem color-mix(in srgb, var(--lime) 18%, transparent);
+  transform: translateY(-2px); }
+.module h3 { font-size: var(--step-1); margin-bottom: var(--s-1); }
+.module p { margin: 0; }
+.module .badge { font-family: var(--font-mono); font-size: var(--step--1); color: var(--lime);
+  display: inline-block; margin-bottom: var(--s-1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .module { transition: none; }
+  .module:hover, .module:focus-within { transform: none; }
+}

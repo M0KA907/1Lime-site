@@ -1,66 +1,72 @@
 ---
 import Base from '../layouts/Base.astro';
+import Terminal from '../components/Terminal.astro';
 import Cta from '../components/Cta.astro';
+import Icon from '../components/Icon.astro';
+import { site } from '../data/site';
 
-const title = '1Lime — Contact';
-const description = "Book a call with 1Lime. One call to scope, quote, and tell you exactly what you'll get and when. Email works without JavaScript.";
-
-const mailtoBook = "mailto:hello@1lime.dev?subject=Book%20a%20call&body=What%20do%20you%20want%20to%20build%3F%0A%0AGoal%3A%0AAudience%3A%0ATimeline%3A";
-const mailtoEnquiry = "mailto:hello@1lime.dev?subject=Website%20enquiry";
+const title = '1Lime — Connect';
+const description = 'No forms, no inbox. Message 1Lime on Discord to scope a build, or read the code on GitHub.';
 
 const expect = [
-  { title: 'Scope', body: "We map what you actually need — pages, content, and the one action the site should drive." },
-  { title: 'Quote', body: "A clear price and timeline. No surprise invoices, no vague 'it depends'." },
-  { title: 'Plan', body: "Exactly what you'll get, when, and what we need from you to ship it." },
+  { k: 'scope', v: 'pages, content, the one action the site should drive' },
+  { k: 'quote', v: 'clear price and timeline — no surprise invoices' },
+  { k: 'plan ', v: "exactly what you get, when, and what we need from you" },
 ];
 ---
 <Base title={title} description={description}>
-  <!-- CONTACT INTRO -->
-  <section class="section hero" aria-labelledby="contact-h">
+  <!-- CONNECT INTRO -->
+  <section class="section" aria-labelledby="contact-h">
     <div class="container">
-      <p class="eyebrow">Contact</p>
-      <h1 id="contact-h">Tell us what you need shipped</h1>
-      <p class="lede">One call. We scope it, quote it, and tell you exactly what you'll get and when.
-        No obligation, no pressure, no jargon.</p>
-      <p class="cta-row">
-        <a class="btn btn--primary" href={mailtoBook}>Book a call</a>
-        <a class="btn btn--ghost" href={mailtoEnquiry}>Send an enquiry</a>
-      </p>
-      <p class="muted">
-        Prefer plain email? Write to
-        <a href="mailto:hello@1lime.dev">hello@1lime.dev</a> — it works with JavaScript disabled and
-        opens your mail client with the details pre-filled.
-      </p>
+      <div class="cy-panel hero">
+        <p class="kicker">connect</p>
+        <h1 id="contact-h" class="glow">Open a channel</h1>
+        <p class="lede">No forms, no inbox. Message us on Discord and tell us what to ship — or read the
+          code on GitHub first. Both are plain links; neither needs JavaScript.</p>
+        <p class="cta-row">
+          <a class="btn btn--primary" href={site.discord.invite} rel="noopener"><Icon name="discord" />Message on Discord</a>
+        </p>
+        <ul class="links" role="list">
+          <li>
+            <a href={site.discord.invite} rel="noopener"><Icon name="discord" class="links__icon" /><span class="links__url">discord.com/users/…</span></a>
+            <span class="muted">— {site.discord.handle}</span>
+          </li>
+          {site.github.map((g) => (
+            <li>
+              <a href={g.url} rel="noopener"><Icon name="github" class="links__icon" /><span class="links__url">{g.url.replace('https://', '')}</span></a>
+              <span class="muted">— {g.handle}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   </section>
 
-  <!-- WHAT TO EXPECT -->
+  <!-- WHAT TO EXPECT (show: terminal) -->
   <section class="section" aria-labelledby="expect-h">
     <div class="container">
-      <p class="eyebrow">What happens next</p>
-      <h2 id="expect-h">What to expect from the call</h2>
-      <ol class="expect">
-        {expect.map((e) => (
-          <li>
-            <article class="card">
-              <h3>{e.title}</h3>
-              <p class="muted">{e.body}</p>
-            </article>
-          </li>
-        ))}
-      </ol>
+      <p class="kicker">./call --agenda</p>
+      <h2 id="expect-h">What the first chat covers</h2>
+      <Terminal title="call --agenda" label="What the first conversation covers">
+        <ol class="term__body">
+          {expect.map((e) => (
+            <li class="termline"><span class="tag tag--ok" aria-hidden="true">→</span><span><strong>{e.k}</strong> {e.v}</span></li>
+          ))}
+        </ol>
+      </Terminal>
     </div>
   </section>
 
-  <Cta headline="Ready when you are" body="Bring a goal and some content. We'll handle the rest — fast, accessible, and built to last." />
+  <Cta headline="ready when you are" body="Bring a goal and some content. We handle the rest — fast, accessible, built to last." />
 
   <style>
-    .lede { font-size: var(--step-1); color: var(--ink-2); max-width: 50ch; }
+    .hero { padding: var(--s-4); }
+    .lede { font-size: var(--step-1); color: var(--cy-dim); max-width: 52ch; }
     .cta-row { display: flex; flex-wrap: wrap; gap: var(--s-2); margin: var(--s-3) 0; }
-    .expect { list-style: none; padding: 0; margin: 0; display: grid; gap: var(--s-3); counter-reset: step; }
-    @media (min-width: 48rem) { .expect { grid-template-columns: repeat(3, 1fr); } }
-    .card { padding: var(--s-3); border: 1px solid var(--line); border-radius: var(--radius); background: #fff; height: 100%; }
-    .card h3 { font-size: var(--step-1); margin-bottom: var(--s-1); }
-    .card p { margin: 0; }
+    .links { list-style: none; padding: 0; margin: var(--s-3) 0 0; display: grid; gap: var(--s-2); }
+    .links li { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+    .links a { display: inline-flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); word-break: break-all; }
+    .links__icon { color: var(--lime); font-size: 1.2em; }
+    .links__url { text-decoration: underline; }
   </style>
 </Base>
