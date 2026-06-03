@@ -1,0 +1,16 @@
+---
+const { n, title, body } = Astro.props;
+---
+<li class="step">
+  <span class="step__n" aria-hidden="true">{n}</span>
+  <div>
+    <h3>{title}</h3>
+    <p class="muted">{body}</p>
+  </div>
+</li>
+<style>
+  .step { display: flex; gap: var(--s-2); align-items: flex-start; padding-block: var(--s-2); border-bottom: 1px solid var(--line); }
+  .step__n { flex: none; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; border-radius: 50%; background: var(--lime); color: var(--lime-ink); font-weight: 800; }
+  .step h3 { font-size: var(--step-1); margin-bottom: 0.25rem; }
+  .step p { margin: 0; }
+</style>

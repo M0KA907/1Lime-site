@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+const { title = '1Lime — websites, delivered like a factory', description = '1Lime turns business requirements into fast, accessible, production-ready websites — built by a multi-agent factory, not a one-off freelancer.' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const nav = [
+  { href: '#services', label: 'Services' },
+  { href: '#process', label: 'Process' },
+  { href: '#work', label: 'Work' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
+    <link rel="canonical" href={Astro.url.href} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="brand" href={base} aria-label="1Lime home">
+          <span class="brand__dot" aria-hidden="true"></span> 1Lime
+        </a>
+        <nav aria-label="Primary">
+          <ul>
+            {nav.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+          </ul>
+        </nav>
+        <a class="btn btn--primary" href="#contact">Book a call</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p class="muted">© 2026 1Lime — the factory is the product. Built with Astro · deployed on GitHub Pages.</p>
+      </div>
+    </footer>
+
+    <style>
+      .site-header { position: sticky; top: 0; z-index: 50; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+      .site-header__inner { display: flex; align-items: center; gap: var(--s-3); padding-block: 0.9rem; }
+      .brand { display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 800; font-size: 1.2rem; color: var(--ink); text-decoration: none; }
+      .brand__dot { width: 0.85rem; height: 0.85rem; border-radius: 50%; background: var(--lime); box-shadow: 0 0 0 4px color-mix(in srgb, var(--lime) 25%, transparent); }
+      nav[aria-label="Primary"] ul { display: none; list-style: none; gap: var(--s-3); margin: 0; padding: 0; }
+      nav[aria-label="Primary"] a { color: var(--ink); text-decoration: none; font-weight: 600; }
+      nav[aria-label="Primary"] a:hover { color: var(--lime-600); }
+      .site-header .btn { margin-left: auto; }
+      @media (min-width: 48rem) {
+        nav[aria-label="Primary"] ul { display: flex; }
+        .site-header .btn { margin-left: 0; }
+        nav[aria-label="Primary"] { margin-left: auto; }
+      }
+      .site-footer { border-top: 1px solid var(--line); padding-block: var(--s-4); margin-top: var(--s-5); }
+    </style>
+  </body>
+</html>

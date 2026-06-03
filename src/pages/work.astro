@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import Cta from '../components/Cta.astro';
+
+const title = '1Lime — Work';
+const description = "Proof you can measure: the standards every 1Lime site meets. Case studies land here as projects ship.";
+
+// Honesty rule (content-model.md §ProofPoint): qualitative claims only until E measures THIS site.
+// No fabricated numbers, no placeholder case studies.
+const proof = [
+  { label: 'WCAG 2.1 AA', note: 'accessibility targeted on every page' },
+  { label: 'Static & CDN-served', note: 'no server to slow down or fall over' },
+  { label: 'No-JS resilient', note: 'content and contact work with scripts off' },
+  { label: 'Days, not months', note: 'discovery to deploy on a real timeline' },
+];
+
+const standards = [
+  { title: 'Accessibility first', body: 'Semantic landmarks, real labels, keyboard paths, visible focus, and reduced-motion support — checked before launch, not after complaints.' },
+  { title: 'Performance by construction', body: 'Static output, no framework runtime shipped to the browser, no render-blocking weight. Fast on a mid-range phone, not just your laptop.' },
+  { title: 'Reliable & portable', body: 'Plain Astro on GitHub Pages. Nothing to patch at 2am, nothing rented, nothing that disappears when a vendor pivots.' },
+];
+---
+<Base title={title} description={description}>
+  <!-- INTRO -->
+  <section class="section hero" aria-labelledby="work-h">
+    <div class="container">
+      <p class="eyebrow">Work</p>
+      <h1 id="work-h">Built to standards you can measure</h1>
+      <p class="lede">We are early and we say so. There are no invented metrics here — only the bar every
+        1Lime site is built to clear, and the case studies that will fill this page as projects ship.</p>
+    </div>
+  </section>
+
+  <!-- PROOF STRIP -->
+  <section class="section" aria-labelledby="proof-h">
+    <div class="container">
+      <p class="eyebrow">Proof</p>
+      <h2 id="proof-h">The bar, on every page</h2>
+      <ul class="proof">
+        {proof.map((p) => (
+          <li><strong>{p.label}</strong><span class="muted">{p.note}</span></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- STANDARDS DETAIL -->
+  <section class="section" aria-labelledby="std-h">
+    <div class="container">
+      <p class="eyebrow">What that means</p>
+      <h2 id="std-h">Three commitments we don't skip</h2>
+      <div class="grid grid--3" role="list">
+        {standards.map((s) => (
+          <div role="listitem">
+            <article class="card">
+              <h3>{s.title}</h3>
+              <p class="muted">{s.body}</p>
+            </article>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES (empty-but-honest) -->
+  <section class="section" aria-labelledby="cases-h">
+    <div class="container">
+      <h2 id="cases-h">Case studies</h2>
+      <p class="muted">No published case studies yet. Each project that ships lands here with its goal,
+        what we built, and the results once they're measured — never a number before it's real.</p>
+    </div>
+  </section>
+
+  <Cta id="contact" headline="Want to be the first case study?" body="Early projects get the most attention. Tell us what you need shipped and let's make something worth writing up." />
+
+  <style>
+    .lede { font-size: var(--step-1); color: var(--ink-2); max-width: 54ch; }
+    .proof { list-style: none; padding: 0; display: grid; gap: var(--s-3); margin: 0; }
+    .proof li { display: flex; flex-direction: column; }
+    .proof strong { font-size: var(--step-1); }
+    @media (min-width: 48rem) { .proof { grid-template-columns: repeat(2, 1fr); } }
+    .card { padding: var(--s-3); border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+    .card h3 { font-size: var(--step-1); margin-bottom: var(--s-1); }
+    .card p { margin: 0; }
+  </style>
+</Base>

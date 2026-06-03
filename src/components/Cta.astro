@@ -1,0 +1,29 @@
+---
+// P6/P7 — reusable lime CTA band. Mailto fallback = zero JS, never dead-ends.
+const {
+  id,
+  headline = "Tell us what you need shipped",
+  body = "One call. We scope it, quote it, and tell you exactly what you'll get and when.",
+  labelledby = id ? `${id}-h` : undefined,
+} = Astro.props;
+const mailtoPrimary = "mailto:hello@1lime.dev?subject=Book%20a%20call&body=What%20do%20you%20want%20to%20build%3F";
+const mailtoSecondary = "mailto:hello@1lime.dev?subject=Website%20enquiry";
+---
+<section id={id} class="section cta-band" aria-labelledby={labelledby}>
+  <div class="container">
+    <h2 id={labelledby}>{headline}</h2>
+    <p>{body}</p>
+    <p class="cta-row">
+      <a class="btn btn--primary" href={mailtoPrimary}>Book a call</a>
+      <a class="btn btn--ghost" href={mailtoSecondary}>Email hello@1lime.dev</a>
+    </p>
+    <p class="muted note">Prefer email? It works without JavaScript — your client opens with the details pre-filled.</p>
+  </div>
+</section>
+<style>
+  .cta-band { background: var(--lime); color: var(--lime-ink); border-radius: var(--radius); }
+  .cta-band p { color: var(--lime-ink); }
+  .cta-row { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-3); }
+  .cta-band .btn--ghost { border-color: var(--lime-ink); color: var(--lime-ink); }
+  .note { font-size: var(--step--1); }
+</style>

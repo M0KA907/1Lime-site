@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import Step from '../components/Step.astro';
+
+const services = [
+  { title: 'Local business sites', body: 'Restaurants, trades, clinics, services. Fast, findable, mobile-first — live in days.' },
+  { title: 'Landing pages', body: 'Single-purpose pages built to convert one visitor action. Measured, not guessed.' },
+  { title: 'Portfolios & brochure sites', body: 'Credible, accessible, low-maintenance sites that age well and load instantly.' },
+];
+
+const steps = [
+  { n: 1, title: 'Discovery', body: 'We capture your goals, audience, and content. You talk; the factory listens.' },
+  { n: 2, title: 'Architecture & design', body: 'Sitemap, content model, and a reusable design system — approved before any build.' },
+  { n: 3, title: 'Build & verify', body: 'Astro build, then automated accessibility, performance, and SEO gates. No gate skipped.' },
+  { n: 4, title: 'Deploy & improve', body: 'Shipped to a CDN-backed host, then monitored and improved with real data.' },
+];
+---
+<Base>
+  <!-- HERO -->
+  <section class="section hero">
+    <div class="container">
+      <p class="eyebrow">Website production, systematised</p>
+      <h1>Websites, delivered like a&nbsp;factory.</h1>
+      <p class="lede">1Lime turns your requirements into a fast, accessible, production-ready website —
+        built by a multi-agent system that gets sharper with every project. Less back-and-forth, more shipped.</p>
+      <p class="cta-row">
+        <a class="btn btn--primary" href="#contact">Book a call</a>
+        <a class="btn btn--ghost" href="#process">See how it works</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section" aria-labelledby="services-h">
+    <div class="container">
+      <p class="eyebrow">What we build</p>
+      <h2 id="services-h">Production sites, not experiments</h2>
+      <div class="grid grid--3" role="list">
+        {services.map((s) => <div role="listitem"><ServiceCard title={s.title} body={s.body} /></div>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="section process" aria-labelledby="process-h">
+    <div class="container">
+      <p class="eyebrow">How it works</p>
+      <h2 id="process-h">A pipeline, every time</h2>
+      <ol class="steps">
+        {steps.map((s) => <Step n={s.n} title={s.title} body={s.body} />)}
+      </ol>
+    </div>
+  </section>
+
+  <!-- WORK / PROOF -->
+  <section id="work" class="section" aria-labelledby="work-h">
+    <div class="container">
+      <p class="eyebrow">Proof</p>
+      <h2 id="work-h">Built to standards you can measure</h2>
+      <ul class="proof">
+        <li><strong>WCAG 2.1 AA</strong><span class="muted">accessibility, every page</span></li>
+        <li><strong>90+ Lighthouse</strong><span class="muted">performance, a11y, SEO</span></li>
+        <li><strong>Days, not months</strong><span class="muted">discovery to deploy</span></li>
+      </ul>
+      <p class="muted">Case studies land here as projects ship — each one feeds the factory.</p>
+    </div>
+  </section>
+
+  <!-- CONTACT / CTA -->
+  <section id="contact" class="section cta-band" aria-labelledby="contact-h">
+    <div class="container">
+      <h2 id="contact-h">Tell us what you need shipped</h2>
+      <p>One call. We scope it, quote it, and tell you exactly what you'll get and when.</p>
+      <p class="cta-row">
+        <a class="btn btn--primary" href="mailto:hello@1lime.dev?subject=Website%20enquiry&body=What%20do%20you%20want%20to%20build%3F">Email hello@1lime.dev</a>
+        <a class="btn btn--ghost" href="mailto:hello@1lime.dev?subject=Book%20a%20call">Book a call</a>
+      </p>
+      <p class="muted note">Prefer a form? It works without JavaScript — your email client opens with the details pre-filled.</p>
+    </div>
+  </section>
+
+  <style>
+    .hero { padding-top: var(--s-5); }
+    .lede { font-size: var(--step-1); color: var(--ink-2); max-width: 42ch; }
+    .cta-row { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-top: var(--s-3); }
+    .process { background: var(--ink); color: var(--paper); border-radius: var(--radius); }
+    .process .eyebrow { color: var(--lime); }
+    .process .steps { list-style: none; margin: 0; padding: 0; }
+    .process .step { border-bottom-color: color-mix(in srgb, var(--paper) 18%, transparent); }
+    .process .muted { color: color-mix(in srgb, var(--paper) 70%, transparent); }
+    .steps { max-width: 52rem; }
+    .proof { list-style: none; padding: 0; display: grid; gap: var(--s-2); margin: 0 0 var(--s-3); }
+    .proof li { display: flex; flex-direction: column; }
+    .proof strong { font-size: var(--step-2); }
+    @media (min-width: 48rem) { .proof { grid-template-columns: repeat(3, 1fr); } }
+    .cta-band { background: var(--lime); color: var(--lime-ink); border-radius: var(--radius); }
+    .cta-band .btn--ghost { border-color: var(--lime-ink); color: var(--lime-ink); }
+    .cta-band p { color: var(--lime-ink); }
+    .note { font-size: var(--step--1); }
+  </style>
+</Base>

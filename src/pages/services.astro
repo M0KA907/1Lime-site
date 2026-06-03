@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import Step from '../components/Step.astro';
+import Cta from '../components/Cta.astro';
+
+const title = '1Lime — Services';
+const description = 'What 1Lime builds: local business sites, landing pages, and portfolios — fast, accessible, production-ready, and shipped in days.';
+
+const services = [
+  { title: 'Local business sites', body: 'Restaurants, trades, clinics, services. Fast, findable, mobile-first — live in days.' },
+  { title: 'Landing pages', body: 'Single-purpose pages built to convert one visitor action. Measured, not guessed.' },
+  { title: 'Portfolios & brochure sites', body: 'Credible, accessible, low-maintenance sites that age well and load instantly.' },
+];
+
+const included = [
+  { title: 'Semantic, accessible HTML', body: 'WCAG 2.1 AA targets on every page — keyboard, screen-reader, and reduced-motion safe by default.' },
+  { title: 'Fast by construction', body: 'Static Astro output on a CDN. No framework bloat, no render-blocking, no surprise weight.' },
+  { title: 'Works without JavaScript', body: 'Content, navigation, and contact paths all function with JS disabled. JS only enhances.' },
+  { title: 'Yours to keep', body: 'Plain, portable code deployed to GitHub Pages. No lock-in, no rented platform.' },
+];
+
+const steps = [
+  { n: 1, title: 'Discovery', body: 'We capture your goals, audience, and content. You talk; the factory listens.' },
+  { n: 2, title: 'Architecture & design', body: 'Sitemap, content model, and a reusable design system — approved before any build.' },
+  { n: 3, title: 'Build & verify', body: 'Astro build, then automated accessibility, performance, and SEO gates. No gate skipped.' },
+  { n: 4, title: 'Deploy & improve', body: 'Shipped to a CDN-backed host, then monitored and improved with real data.' },
+];
+---
+<Base title={title} description={description}>
+  <!-- INTRO -->
+  <section class="section hero" aria-labelledby="services-h">
+    <div class="container">
+      <p class="eyebrow">Services</p>
+      <h1 id="services-h">What we build</h1>
+      <p class="lede">Three things, done well. Each one ships fast, meets the same accessibility and
+        performance bar, and is built from reusable parts so the next project starts further ahead.</p>
+    </div>
+  </section>
+
+  <!-- WHAT WE BUILD -->
+  <section class="section" aria-labelledby="offer-h">
+    <div class="container">
+      <p class="eyebrow">Offerings</p>
+      <h2 id="offer-h">Production sites, not experiments</h2>
+      <div class="grid grid--3" role="list">
+        {services.map((s) => <div role="listitem"><ServiceCard title={s.title} body={s.body} /></div>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT'S INCLUDED -->
+  <section class="section" aria-labelledby="incl-h">
+    <div class="container">
+      <p class="eyebrow">Every build includes</p>
+      <h2 id="incl-h">The same standards, every time</h2>
+      <div class="grid grid--2" role="list">
+        {included.map((s) => <div role="listitem"><ServiceCard title={s.title} body={s.body} /></div>)}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section process" aria-labelledby="process-h">
+    <div class="container">
+      <p class="eyebrow">How it works</p>
+      <h2 id="process-h">A pipeline, every time</h2>
+      <ol class="steps">
+        {steps.map((s) => <Step n={s.n} title={s.title} body={s.body} />)}
+      </ol>
+    </div>
+  </section>
+
+  <Cta id="contact" headline="Not sure which one fits?" body="Tell us the goal. We'll point you at the right build and what it takes to ship it." />
+
+  <style>
+    .lede { font-size: var(--step-1); color: var(--ink-2); max-width: 52ch; }
+    .process { background: var(--ink); color: var(--paper); border-radius: var(--radius); }
+    .process .eyebrow { color: var(--lime); }
+    .process .steps { list-style: none; margin: 0; padding: 0; max-width: 52rem; }
+    .process .step { border-bottom-color: color-mix(in srgb, var(--paper) 18%, transparent); }
+    .process .muted { color: color-mix(in srgb, var(--paper) 70%, transparent); }
+    .grid--2 { display: grid; gap: var(--s-3); }
+    @media (min-width: 48rem) { .grid--2 { grid-template-columns: repeat(2, 1fr); } }
+  </style>
+</Base>
